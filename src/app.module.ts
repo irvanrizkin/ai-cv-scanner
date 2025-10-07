@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { SupabaseModule } from './supabase/supabase.module';
 import { JobModule } from './job/job.module';
 import { QueueModule } from './queue/queue.module';
+import { ResultModule } from './result/result.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { QueueModule } from './queue/queue.module';
     SupabaseModule,
     JobModule,
     QueueModule,
+    ResultModule,
   ],
   controllers: [AppController],
   providers: [AppService, SupabaseService],
