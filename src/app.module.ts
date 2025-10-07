@@ -5,9 +5,10 @@ import { UploadModule } from './upload/upload.module';
 import { SupabaseService } from './supabase/supabase.service';
 import { ConfigModule } from '@nestjs/config';
 import { SupabaseModule } from './supabase/supabase.module';
+import { JobModule } from './job/job.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), UploadModule, SupabaseModule],
+  imports: [ConfigModule.forRoot(), UploadModule, SupabaseModule, JobModule],
   controllers: [AppController],
   providers: [AppService, SupabaseService],
 })

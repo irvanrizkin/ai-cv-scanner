@@ -35,6 +35,63 @@ export type Database = {
         }
         Relationships: []
       }
+      jobs: {
+        Row: {
+          created_at: string
+          cv_feedback: string | null
+          cv_id: number | null
+          cv_match_rate: number | null
+          id: number
+          job_title: string | null
+          overall_summary: string | null
+          project_feedback: string | null
+          project_report_id: number | null
+          project_score: number | null
+          status: string | null
+        }
+        Insert: {
+          created_at?: string
+          cv_feedback?: string | null
+          cv_id?: number | null
+          cv_match_rate?: number | null
+          id?: number
+          job_title?: string | null
+          overall_summary?: string | null
+          project_feedback?: string | null
+          project_report_id?: number | null
+          project_score?: number | null
+          status?: string | null
+        }
+        Update: {
+          created_at?: string
+          cv_feedback?: string | null
+          cv_id?: number | null
+          cv_match_rate?: number | null
+          id?: number
+          job_title?: string | null
+          overall_summary?: string | null
+          project_feedback?: string | null
+          project_report_id?: number | null
+          project_score?: number | null
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "jobs_cv_id_fkey"
+            columns: ["cv_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_project_report_id_fkey"
+            columns: ["project_report_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
