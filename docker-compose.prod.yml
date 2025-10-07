@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: prod
+    container_name: nestjs-api-prod
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - redis
+    networks:
+      - backend
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis-prod
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data_prod:/data
+    networks:
+      - backend
+
+volumes:
+  redis_data_prod:
+
+networks:
+  backend:
+    driver: bridge

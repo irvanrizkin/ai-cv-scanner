@@ -1,9 +1,13 @@
 import { Injectable } from '@nestjs/common';
+import { QueueService } from 'src/queue/queue.service';
 import { SupabaseService } from 'src/supabase/supabase.service';
 
 @Injectable()
 export class JobService {
-  constructor(private readonly supabaseService: SupabaseService) {}
+  constructor(
+    private readonly supabaseService: SupabaseService,
+    private readonly queueService: QueueService,
+  ) {}
 
   async insertJob(params: {
     cvId: string;
@@ -29,6 +33,12 @@ export class JobService {
     if (error) {
       throw new Error(`Failed to insert job record: ${error.message}`);
     }
+
+    await this.queueService.addJob({
+      jobId: data.id,
+      cvId: data.cv_id,
+      projectReportId: data.project_report_id,
+    });
 
     return data;
   }

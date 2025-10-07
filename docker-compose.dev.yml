@@ -1,0 +1,46 @@
+version: '3.9'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    container_name: nestjs-api-dev
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - redis
+    networks:
+      - backend
+    volumes:
+      - .:/app
+      - /app/node_modules
+    tty: true
+    stdin_open: true
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis-dev
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data_dev:/data
+    networks:
+      - backend
+
+# ===============================
+# 📦 Volumes & Network
+# ===============================
+volumes:
+  redis_data_dev:
+
+networks:
+  backend:
+    driver: bridge
