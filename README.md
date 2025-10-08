@@ -23,7 +23,7 @@ Docker is mandatory since Redis is easier to setup on Docker
 make dev
 
 #Production
-make proc
+make prod
 
 #Removing Docker Compose
 make down-dev
