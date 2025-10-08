@@ -1,0 +1,19 @@
+meta {
+  name: Evaluate
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:3000/evaluate
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "cv_id": "6",
+    "project_report_id": "7",
+    "job_title": "Recruitment Irvan"
+  }
+}

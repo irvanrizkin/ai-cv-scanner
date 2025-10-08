@@ -1,0 +1,16 @@
+meta {
+  name: Upload
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3000/upload
+  body: multipartForm
+  auth: inherit
+}
+
+body:multipart-form {
+  cv: @file()
+  project_report: @file()
+}
