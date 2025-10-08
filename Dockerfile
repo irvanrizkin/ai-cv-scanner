@@ -6,42 +6,38 @@ WORKDIR /app
 COPY package*.json ./
 
 # ==========================================
-# Stage 2 — Dependencies for development
+# Stage 2 — Dependencies
 # ==========================================
-FROM base AS deps-dev
+FROM base AS deps
 RUN npm install
 
 # ==========================================
-# Stage 3 — Dependencies for production
+# Stage 3 — Build (TypeScript → JS)
 # ==========================================
-FROM base AS deps-prod
-RUN npm ci --omit=dev
-
-# ==========================================
-# Stage 4 — Build (TypeScript → JS)
-# ==========================================
-FROM deps-dev AS builder
+FROM deps AS builder
 COPY . .
 RUN npm run build
 
 # ==========================================
-# Stage 5 — Development runtime
+# Stage 4 — Development runtime
 # ==========================================
-FROM deps-dev AS dev
+FROM deps AS dev
 WORKDIR /app
+COPY package*.json ./
+RUN npm install
 COPY . .
 ENV NODE_ENV=development
 EXPOSE 3000
 CMD ["npm", "run", "start:dev"]
 
 # ==========================================
-# Stage 6 — Production runtime
+# Stage 5 — Production runtime
 # ==========================================
 FROM node:20-alpine AS prod
 WORKDIR /app
 COPY --from=builder /app/dist ./dist
 COPY package*.json ./
-COPY --from=deps-prod /app/node_modules ./node_modules
+RUN npm ci --omit=dev
 ENV NODE_ENV=production
 EXPOSE 3000
 CMD ["node", "dist/main.js"]

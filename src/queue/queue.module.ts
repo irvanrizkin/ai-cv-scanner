@@ -3,6 +3,9 @@ import { QueueService } from './queue.service';
 import { BullModule } from '@nestjs/bullmq';
 import { SupabaseModule } from 'src/supabase/supabase.module';
 import { QueueProcessor } from './queue.processor';
+import { RagieModule } from 'src/ragie/ragie.module';
+import { PdfModule } from 'src/pdf/pdf.module';
+import { OpenaiModule } from 'src/openai/openai.module';
 
 @Module({
   imports: [
@@ -16,6 +19,9 @@ import { QueueProcessor } from './queue.processor';
       name: 'cv-processing',
     }),
     SupabaseModule,
+    RagieModule,
+    PdfModule,
+    OpenaiModule,
   ],
   providers: [QueueService, QueueProcessor],
   exports: [QueueService],

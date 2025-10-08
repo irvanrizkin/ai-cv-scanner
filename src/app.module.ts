@@ -8,6 +8,9 @@ import { SupabaseModule } from './supabase/supabase.module';
 import { JobModule } from './job/job.module';
 import { QueueModule } from './queue/queue.module';
 import { ResultModule } from './result/result.module';
+import { RagieModule } from './ragie/ragie.module';
+import { PdfModule } from './pdf/pdf.module';
+import { OpenaiModule } from './openai/openai.module';
 
 @Module({
   imports: [
@@ -17,6 +20,9 @@ import { ResultModule } from './result/result.module';
     JobModule,
     QueueModule,
     ResultModule,
+    RagieModule,
+    PdfModule,
+    OpenaiModule,
   ],
   controllers: [AppController],
   providers: [AppService, SupabaseService],
